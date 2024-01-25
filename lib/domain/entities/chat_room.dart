@@ -1,24 +1,32 @@
 import 'message.dart';
-import 'user.dart';
 
 class ChatRoom{
-  String id;
-  List<User> users;
+  List<String> users;
   List<Message> messages;
 
-  ChatRoom({required this.id, required this.users, required this.messages});
+  ChatRoom({required this.users, required this.messages});
 
   factory ChatRoom.fromJson(Map<String, dynamic> json) {
-    List<User> users = (json['users'] as List<dynamic>).map((userData) {
-      return User.fromJson(userData);
-    }).toList();
+    print('Raw JSON: $json');
 
-    List<Message> messages = (json['messages'] as List<dynamic>).map((messageData) {
-      return Message.fromJson(messageData);
-    }).toList();
+    var users = <String>[];
+    for(var i = 0; i < json['users'].length; i++){
+      users.add(json['users'][i]);
+      print('User $i: ${json['users'][i]}');
+    }
+
+    print('Raw user: $users');
+
+    var messages = <Message>[];
+    for(var j = 0; j < json['messages'].length; j++){
+      messages.add(Message.fromJson(json['messages'][j]));
+      print('Message $j: ${json['messages'][j]}');
+    }
+
+    print('Raw message: $messages');
+    print('Ini ChatRoom: ChatRoom ${users}, ${messages}');
 
     return ChatRoom(
-      id: json['id'],
       users: users,
       messages: messages,
     );
